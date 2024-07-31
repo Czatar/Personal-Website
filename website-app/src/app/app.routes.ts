@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { HelloWorldComponent } from './hello-world/hello-world.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 export const routes: Routes = [
-  { path: '', component: HelloWorldComponent }
+  { path: '', component: LandingPageComponent }
 ];
