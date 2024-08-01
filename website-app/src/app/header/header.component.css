@@ -1,6 +1,24 @@
 .header {
-  background-color: #333333;
-  color: white;
   padding: 1rem;
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-link {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.nav-link.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+  background-color: rgba(255, 255, 255, 0.1);
 }
