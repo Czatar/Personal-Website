@@ -20,6 +20,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  padding-right: 20px; /* Add some padding to the right for spacing */
 }
 
 .nav-link {
@@ -38,4 +39,13 @@
 
 .nav-link:hover {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+  position: absolute; /* Position the logo absolutely */
+  left: 20px; /* Adjust the distance from the left edge */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for centering */
+  height: 80%; /* Adjust the height of the logo as needed */
+  margin: 0; /* Remove margin */
 }
