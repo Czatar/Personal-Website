@@ -43,9 +43,9 @@
 
 .logo {
   position: absolute; /* Position the logo absolutely */
-  left: 20px; /* Adjust the distance from the left edge */
+  left: 1rem; /* Adjust the distance from the left edge */
   top: 50%; /* Center vertically */
   transform: translateY(-50%); /* Adjust for centering */
-  height: 80%; /* Adjust the height of the logo as needed */
+  height: 90%; /* Adjust the height of the logo as needed */
   margin: 0; /* Remove margin */
 }
