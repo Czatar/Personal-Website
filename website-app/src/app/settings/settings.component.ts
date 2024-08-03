@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -9,10 +9,14 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css'],
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit {
   isSliderVisible: boolean = false;
   fontSize: number = 16;
   areButtonsVisible: boolean = false;
+
+  ngOnInit() {
+    this.loadSettings();
+  }
 
   toggleButtonsVisibility() {
     this.areButtonsVisible = !this.areButtonsVisible;
@@ -24,6 +28,7 @@ export class SettingsComponent {
 
   adjustFontSize() {
     document.body.style.fontSize = `${this.fontSize}px`;
+    this.saveSettings();
   }
 
   toggleTheme() {
@@ -32,6 +37,7 @@ export class SettingsComponent {
     this.invertColor('--color-3');
     this.invertColor('--contrast-1');
     this.invertColor('--contrast-3');
+    this.saveSettings();
   }
 
   invertColor(variable: string) {
@@ -47,5 +53,44 @@ export class SettingsComponent {
     const color = parseInt(hex.slice(1), 16);
     const invertedColor = 0xffffff ^ color;
     return `#${invertedColor.toString(16).padStart(6, '0')}`;
+  }
+
+  saveSettings() {
+    localStorage.setItem('fontSize', this.fontSize.toString());
+    localStorage.setItem('themeColor1', getComputedStyle(document.documentElement).getPropertyValue('--color-1').trim());
+    localStorage.setItem('themeColor2', getComputedStyle(document.documentElement).getPropertyValue('--color-2').trim());
+    localStorage.setItem('themeColor3', getComputedStyle(document.documentElement).getPropertyValue('--color-3').trim());
+    localStorage.setItem('themeContrast1', getComputedStyle(document.documentElement).getPropertyValue('--contrast-1').trim());
+    localStorage.setItem('themeContrast3', getComputedStyle(document.documentElement).getPropertyValue('--contrast-3').trim());
+  }
+
+  loadSettings() {
+    const savedFontSize = localStorage.getItem('fontSize');
+    if (savedFontSize) {
+      this.fontSize = +savedFontSize;
+      document.body.style.fontSize = `${this.fontSize}px`;
+    }
+
+    const themeColor1 = localStorage.getItem('themeColor1');
+    const themeColor2 = localStorage.getItem('themeColor2');
+    const themeColor3 = localStorage.getItem('themeColor3');
+    const themeContrast1 = localStorage.getItem('themeContrast1');
+    const themeContrast3 = localStorage.getItem('themeContrast3');
+
+    if (themeColor1) {
+      document.documentElement.style.setProperty('--color-1', themeColor1);
+    }
+    if (themeColor2) {
+      document.documentElement.style.setProperty('--color-2', themeColor2);
+    }
+    if (themeColor3) {
+      document.documentElement.style.setProperty('--color-3', themeColor3);
+    }
+    if (themeContrast1) {
+      document.documentElement.style.setProperty('--contrast-1', themeContrast1);
+    }
+    if (themeContrast3) {
+      document.documentElement.style.setProperty('--contrast-3', themeContrast3);
+    }
   }
 }
