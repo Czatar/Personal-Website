@@ -3,9 +3,8 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.css'
+  styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
 
@@ -20,7 +19,7 @@ export class FooterComponent implements OnInit {
     document.head.appendChild(script);
     window.googleTranslateElementInit = () => {
       new window.google.translate.TranslateElement(
-        { pageLanguage: 'en' }, // Set the default language of your page
+        { pageLanguage: 'en' },
         'google_translate_element'
       );
     };
