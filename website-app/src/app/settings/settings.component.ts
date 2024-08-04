@@ -10,8 +10,10 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
-  isSliderVisible: boolean = false;
+  isFontSliderVisible: boolean = false;
+  isOpacitySliderVisible: boolean = false;
   fontSize: number = 16;
+  opacity: number = 0.2; // Default opacity value
   areButtonsVisible: boolean = false;
 
   ngOnInit() {
@@ -22,12 +24,21 @@ export class SettingsComponent implements OnInit {
     this.areButtonsVisible = !this.areButtonsVisible;
   }
 
-  toggleSlider() {
-    this.isSliderVisible = !this.isSliderVisible;
+  toggleFontSlider() {
+    this.isFontSliderVisible = !this.isFontSliderVisible;
   }
 
   adjustFontSize() {
     document.body.style.fontSize = `${this.fontSize}px`;
+    this.saveSettings();
+  }
+
+  toggleOpacitySlider() {
+    this.isOpacitySliderVisible = !this.isOpacitySliderVisible;
+  }
+
+  adjustOpacity() {
+    document.documentElement.style.setProperty('--background-opacity', this.opacity.toString());
     this.saveSettings();
   }
 
@@ -62,6 +73,7 @@ export class SettingsComponent implements OnInit {
     localStorage.setItem('themeColor3', getComputedStyle(document.documentElement).getPropertyValue('--color-3').trim());
     localStorage.setItem('themeContrast1', getComputedStyle(document.documentElement).getPropertyValue('--contrast-1').trim());
     localStorage.setItem('themeContrast3', getComputedStyle(document.documentElement).getPropertyValue('--contrast-3').trim());
+    localStorage.setItem('backgroundOpacity', this.opacity.toString()); // Save opacity
   }
 
   loadSettings() {
@@ -76,6 +88,7 @@ export class SettingsComponent implements OnInit {
     const themeColor3 = localStorage.getItem('themeColor3');
     const themeContrast1 = localStorage.getItem('themeContrast1');
     const themeContrast3 = localStorage.getItem('themeContrast3');
+    const savedOpacity = localStorage.getItem('backgroundOpacity');
 
     if (themeColor1) {
       document.documentElement.style.setProperty('--color-1', themeColor1);
@@ -91,6 +104,10 @@ export class SettingsComponent implements OnInit {
     }
     if (themeContrast3) {
       document.documentElement.style.setProperty('--contrast-3', themeContrast3);
+    }
+    if (savedOpacity) {
+      this.opacity = +savedOpacity;
+      document.documentElement.style.setProperty('--background-opacity', this.opacity.toString());
     }
   }
 }
