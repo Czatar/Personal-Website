@@ -9,10 +9,5 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  audio = new Audio('assets/audio/wah.mp3');
 
-  playAudio() {
-    this.audio.currentTime = 0;
-    this.audio.play();
-  }
 }
