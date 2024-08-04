@@ -4,3 +4,14 @@ import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
+
+  declare global {
+  interface Window {
+    googleTranslateElementInit: () => void;
+    google: {
+      translate: {
+        TranslateElement: new (options: { pageLanguage: string }, element: string) => void;
+      };
+    };
+  }
+}
