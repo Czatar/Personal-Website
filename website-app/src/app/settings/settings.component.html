@@ -14,7 +14,7 @@
   </div>
   <div class="button-wrapper" [ngClass]="{'visible': areButtonsVisible}">
     <button class="settings-button color-3 contrast-1" (click)="toggleOpacitySlider()">
-      <img src="assets/images/text_icon.png" alt="Change Background Opacity" class="button-image">
+      <img src="assets/images/waves_icon.png" alt="Change Background Opacity" class="button-image">
     </button>
     <div class="slider contrast-1" *ngIf="isOpacitySliderVisible">
       <input type="range" min="0" max="0.5" step="0.01" [(ngModel)]="opacity" (input)="adjustOpacity()">
