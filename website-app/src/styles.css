@@ -1,3 +1,36 @@
+@keyframes fadeInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInTop {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -6,6 +39,11 @@ html, body {
 body {
     font-family: Arial, Helvetica, sans-serif;
     transition: background-color 1s, color 1s;
+}
+
+h1, h2 {
+  text-align: center;
+  width: 100%;
 }
 
 .color-1, .color-2, .color-3, .contrast-1, .contrast-3 {
@@ -51,7 +89,6 @@ app-root {
 .contrast-3 {
   color: var(--contrast-3);
 }
-
 
 .glow {
     box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.2);

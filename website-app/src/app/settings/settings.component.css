@@ -35,6 +35,7 @@
   outline: none;
   box-shadow: none;
   overflow: hidden;
+  animation: fadeInLeft 1s ease-out forwards;
 }
 
 .settings-button:hover {
