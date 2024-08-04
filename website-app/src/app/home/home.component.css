@@ -24,7 +24,7 @@
 }
 
 .icon-link:hover {
-  box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.4); /* Glow effect */
+  box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.4);
 }
 
 .icon-link:nth-child(1) {

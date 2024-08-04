@@ -34,6 +34,7 @@
 html, body {
     height: 100%;
     margin: 0;
+    z-index: -1;
 }
 
 body {
@@ -50,16 +51,27 @@ h1, h2 {
   transition: background-color 1s, color 1s;
 }
 
+.color-2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('assets/animations/waves.gif');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.2;
+  z-index: 0;
+  pointer-events: none;
+}
+
 app-root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-}
-
-#content {
-  padding: 1rem;
-  flex: 1;
 }
 
 :root {
@@ -91,5 +103,5 @@ app-root {
 }
 
 .glow {
-    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.2);
+  animation: rainbow 15s infinite;
 }

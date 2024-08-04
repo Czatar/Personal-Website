@@ -5,7 +5,7 @@
   height: 10vh;
   box-sizing: border-box;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: flex-end;
   align-items: center;
