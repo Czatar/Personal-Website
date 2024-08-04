@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 export class SettingsComponent implements OnInit {
   isFontSliderVisible: boolean = false;
   isOpacitySliderVisible: boolean = false;
-  fontSize: number = 16;
+  fontSize: number = 20;
   opacity: number = 0.2; // Default opacity value
   areButtonsVisible: boolean = false;
 
@@ -73,7 +73,7 @@ export class SettingsComponent implements OnInit {
     localStorage.setItem('themeColor3', getComputedStyle(document.documentElement).getPropertyValue('--color-3').trim());
     localStorage.setItem('themeContrast1', getComputedStyle(document.documentElement).getPropertyValue('--contrast-1').trim());
     localStorage.setItem('themeContrast3', getComputedStyle(document.documentElement).getPropertyValue('--contrast-3').trim());
-    localStorage.setItem('backgroundOpacity', this.opacity.toString()); // Save opacity
+    localStorage.setItem('backgroundOpacity', this.opacity.toString());
   }
 
   loadSettings() {

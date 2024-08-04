@@ -9,7 +9,7 @@
       <img src="assets/images/text_icon.png" alt="Change Font Size" class="button-image">
     </button>
     <div class="slider contrast-1" *ngIf="isFontSliderVisible">
-      <input type="range" min="12" max="20" [(ngModel)]="fontSize" (input)="adjustFontSize()">
+      <input type="range" min="16" max="26" [(ngModel)]="fontSize" (input)="adjustFontSize()">
     </div>
   </div>
   <div class="button-wrapper" [ngClass]="{'visible': areButtonsVisible}">
