@@ -27,13 +27,13 @@
   height: 80px;
   border-radius: 50%;
   border: 2px solid white;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
   font-size: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   outline: none;
-  box-shadow: none;
   overflow: hidden;
   animation: fadeInLeft 1s ease-out forwards;
 }

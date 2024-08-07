@@ -1,12 +1,12 @@
 <div class="settings-button-container">
   <div class="button-wrapper" [ngClass]="{'visible': areButtonsVisible}">
     <button class="settings-button color-3 contrast-1" (click)="toggleTheme()">
-      <img src="assets/images/light_icon.png" alt="Toggle Theme" class="button-image">
+      <img src="assets/images/settings/light_icon.png" alt="Toggle Theme" class="button-image">
     </button>
   </div>
   <div class="button-wrapper" [ngClass]="{'visible': areButtonsVisible}">
     <button class="settings-button color-3 contrast-1" (click)="toggleFontSlider()">
-      <img src="assets/images/text_icon.png" alt="Change Font Size" class="button-image">
+      <img src="assets/images/settings/text_icon.png" alt="Change Font Size" class="button-image">
     </button>
     <div class="slider contrast-1" *ngIf="isFontSliderVisible">
       <input type="range" min="16" max="26" [(ngModel)]="fontSize" (input)="adjustFontSize()">
@@ -14,13 +14,13 @@
   </div>
   <div class="button-wrapper" [ngClass]="{'visible': areButtonsVisible}">
     <button class="settings-button color-3 contrast-1" (click)="toggleOpacitySlider()">
-      <img src="assets/images/waves_icon.png" alt="Change Background Opacity" class="button-image">
+      <img src="assets/images/settings/waves_icon.png" alt="Change Background Opacity" class="button-image">
     </button>
     <div class="slider contrast-1" *ngIf="isOpacitySliderVisible">
       <input type="range" min="0" max="0.5" step="0.01" [(ngModel)]="opacity" (input)="adjustOpacity()">
     </div>
   </div>
   <button class="settings-button color-3" (click)="toggleButtonsVisibility()">
-    <img src="assets/images/menu_icon.png" alt="Menu Button" class="button-image">
+    <img src="assets/images/settings/menu_icon.png" alt="Menu Button" class="button-image">
   </button>
 </div>
