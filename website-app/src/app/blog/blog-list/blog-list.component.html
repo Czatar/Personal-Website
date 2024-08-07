@@ -1,0 +1,13 @@
+<div class="blog-list-container">
+  <h1 class="contrast-1 bubble" appFadeOnScroll>My Blogs</h1>
+  <div class="category-list">
+    <div *ngFor="let category of categories" class="contrast-1 bubble category" (click)="toggleCategory(category)" appFadeOnScroll>
+      <h2>{{ category.name }}</h2>
+      <div *ngIf="category.expanded" class="posts">
+        <div *ngFor="let post of category.posts" [routerLink]="['/blogs', category.name, post.id]" class="post">
+          <h3>{{ post.title }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
