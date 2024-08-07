@@ -52,7 +52,11 @@
 }
 
 @media (max-width: 600px) {
-  .category-list, .post {
+  .category-list {
     width: 100%;
+  }
+  
+  .post {
+    width: 90%;
   }
 }
