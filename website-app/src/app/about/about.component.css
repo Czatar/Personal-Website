@@ -62,4 +62,7 @@ img {
     width: 100%;
     align-self: center;
   }
+  img {
+    width: 90%;
+  }
 }

@@ -24,13 +24,13 @@ export class FadeOnScrollDirective implements AfterViewInit {
     const elementTop = rect.top;
     const elementBottom = rect.bottom;
 
-    const middleStart = windowHeight * 0.1; // 10% from the top
-    const middleEnd = windowHeight * 0.9; // 10% from the bottom
+    const middleStart = windowHeight * 0.12; // 12% from the top
+    const middleEnd = windowHeight * 0.88; // 12% from the bottom
 
     let opacity = 1;
 
     if (elementTop >= middleStart && elementBottom <= middleEnd) {
-      // Element is within the middle 80% of the viewport
+      // Element is within the middle 76% of the viewport
       opacity = 1;
     } else if (elementBottom < middleStart || elementTop > middleEnd) {
       // Element is completely outside the viewport
