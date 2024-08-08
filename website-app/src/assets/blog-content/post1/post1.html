@@ -15,7 +15,7 @@
         website for me, I decided to try it out myself and see how far I could push AI with this.</p>
     <p>As an appetizer to one of the struggles I faced, Jippity (as of August 2024) is not aware of Angular v17,
         which is the exact version of Angular I used. This forced me to trust my own judgement and do 
-        additional research when things to south to ensure that development goes smoothly.</p>
+        additional research when things go south to ensure that development goes smoothly.</p>
     <p>In this post, I'll go over my prompts, Jippity's responses, and how my primitive knowledge of
         HTML and CSS saved me from initial deployment to a state where I can develop the content of the website
         at my own leisure without consulting Jippity any further.</p>
@@ -27,14 +27,14 @@
         and eventually realized that I already used my phone number when making my team's AWS account, and AWS
         has a strong rule about multiple accounts. After a frustrating night, I decided to try out Azure, so I 
         asked Jippity if it would cost me anything before proceeding.</p>
-    <img src="assets/blog-content/post1/costs.png">
+    <img src="/assets/blog-content/post1/costs.png">
     <p>Surprisingly, setting up a static website on Azure is BY FAR way easier than on AWS. For reference,
         You would have to use: S3, Route 53, Cloudfront, Certificate Manager, and CodePipeline to deploy a 
         static website on a secure custom domain. On Azure, all of this is done in "Static Website App" without
         having to open up different services and cross-reference configurations to make it all work.</p>
     <p>Moving on, getting a simple "hello world" html page set up on my domain was light work. So I moved on
         by asking Jippity to set up a simple hello-world component to get familiar with deployment.</p>
-    <img src="assets/blog-content/post1/commands.png">
+    <img src="/assets/blog-content/post1/commands.png">
     <p>At this point, everything seemed to be going smoothly!</p>
 </div>
 <div class="post-bubble">
@@ -53,7 +53,7 @@
         Lo and behold, it worked for reasons that are again beyond me, but at least it works and that's what matters.</p>
     <p>It was time for deployment, so I pushed everything to GitHub to have everything deployed. Surprise surprise,
         GitHub actions failed.</p>
-    <img src="assets/blog-content/post1/nodeversion.png">
+    <img src="/assets/blog-content/post1/nodeversion.png">
     <p>Thankfully, I found the culprit. I truly believe that I would have gone insane if it weren't for the fact
         that I had encountered this issue before and knew to change 'uses: actions/setup-node@v3' to use 'v4' instead.</p>
     <p>In conclusion, this entire process took a full day to resolve and I am now very careful to check for version
@@ -63,9 +63,9 @@
     <h3>Getting On With The Visuals</h3>
     <p>Now that I had automatic deployment set up, I was ready to begin. With Jippity, you have to be as specific
         as humanly possible, because otherwise you're going to get something that looks... less than ideal.</p>
-    <img src="assets/blog-content/post1/aiwebsiteprompt.png">
-    <img src="assets/blog-content/post1/aihome.png">
-    <img src="assets/blog-content/post1/aiabout.png">
+    <img src="/assets/blog-content/post1/aiwebsiteprompt.png">
+    <img src="/assets/blog-content/post1/aihome.png">
+    <img src="/assets/blog-content/post1/aiabout.png">
     <p>Here, the solid color is meant to be a placeholder for a background image that you're meant to choose yourself.
         However, I have several problems with this method of "do what you want" prompting. Opening index.html didn't
         give me any indication that I was supposed to scroll down besides the browser's scroll bar. This is also
@@ -73,5 +73,10 @@
         to work with. Sure, AI might be great, but the larger of a website or project it has to work with, the more
         unstable it gets since it starts getting into specifics. This is why I chose to focus on small components at
         a time, and even then, things can get quite complex depending on what you want.</p>
-        
+    <img src="/assets/blog-content/post1/settings.png">
+    <p>The settings button is a good example of something that turned out to be more complex than I thought it would be.
+        Overall, it isn't too bad. The
+        <a href="https://github.com/Czatar/Personal-Website/blob/main/website-app/src/app/settings/settings.component.ts">
+        settings.component.ts</a> file is only about 100 lines long. This controls the site theme, font size, and
+        background opacity. Surprisingly, the css styling for it required more effort. </p>
 </div>

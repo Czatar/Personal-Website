@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation  } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { PostService } from '../../post.service';
@@ -13,8 +13,7 @@ interface Post {
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit, OnDestroy {
   post!: Post;

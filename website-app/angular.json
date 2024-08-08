@@ -14,8 +14,6 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/website-app",
-            "baseHref": "./",
-            "deployUrl": "./",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -24,8 +22,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/staticwebapp.config.json"
+              "src/assets"
             ],
             "styles": [
               "src/styles.css"
@@ -34,6 +31,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",

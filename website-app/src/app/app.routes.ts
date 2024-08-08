@@ -6,5 +6,5 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'blogs', loadChildren: () => import('./blog/blog.module').then(m => m.BlogModule) },
-  { path: '**', pathMatch: 'full', component: HomeComponent }
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
