@@ -11,7 +11,8 @@
         by focusing on indiviual components at a time.</p>
     <p>I believe that it's vital for those in the IT industry to have some sort of personal website, and I am
         absolutely not proficient in front-end development, but I wanted to at least have some exposure to the tools
-        that most job listings have in their "wish list" for candidates.</p>
+        that most job listings have in their "wish list" for candidates. So instead of having someone else make this
+        website for me, I decided to try it out myself and see how far I could push AI with this.</p>
     <p>As an appetizer to one of the struggles I faced, Jippity (as of August 2024) is not aware of Angular v17,
         which is the exact version of Angular I used. This forced me to trust my own judgement and do 
         additional research when things to south to ensure that development goes smoothly.</p>
@@ -41,6 +42,36 @@
     <p>It did not, in fact, go smoothly. I was getting strange errors that seemed incomprehensible. Thankfully,
         Jippity correctly assessed that this was a versioning issue and that I had to install the right versions
         to make Angular v17 work.</p>
-    <p>Okay, so to make Angular v17 work, I had to install the required versions found 
-        <a class="constrast-1" href="https://angular.dev/reference/versions">here</a>. </p>
+    <p>Thanks to a stack overflow post, I learned that the required versions are found 
+        <a class="constrast-1" href="https://angular.dev/reference/versions">here</a>, but the bulk of the struggle
+        was uninstalling old versions of nodejs even though I had installed newer versions (and it insisted on
+        using the old versions for reasons that are beyond me). Once again, Jippity
+        saved the day and I was able to uninstall the old version. Hooray!</p>
+    <p>Now that the hello-world component was displaying properly, it was time to see how 'ng serve' refreshed
+        live during development... but no matter what I did or how detailed I was with Jippity, nothing worked.
+        After a few hours of more frustration, I gave up and installed everything on Powershell instead of WSL 2.
+        Lo and behold, it worked for reasons that are again beyond me, but at least it works and that's what matters.</p>
+    <p>It was time for deployment, so I pushed everything to GitHub to have everything deployed. Surprise surprise,
+        GitHub actions failed.</p>
+    <img src="assets/blog-content/post1/nodeversion.png">
+    <p>Thankfully, I found the culprit. I truly believe that I would have gone insane if it weren't for the fact
+        that I had encountered this issue before and knew to change 'uses: actions/setup-node@v3' to use 'v4' instead.</p>
+    <p>In conclusion, this entire process took a full day to resolve and I am now very careful to check for version
+        requirements before touching any tool.</p>
+</div>
+<div class="post-bubble">
+    <h3>Getting On With The Visuals</h3>
+    <p>Now that I had automatic deployment set up, I was ready to begin. With Jippity, you have to be as specific
+        as humanly possible, because otherwise you're going to get something that looks... less than ideal.</p>
+    <img src="assets/blog-content/post1/aiwebsiteprompt.png">
+    <img src="assets/blog-content/post1/aihome.png">
+    <img src="assets/blog-content/post1/aiabout.png">
+    <p>Here, the solid color is meant to be a placeholder for a background image that you're meant to choose yourself.
+        However, I have several problems with this method of "do what you want" prompting. Opening index.html didn't
+        give me any indication that I was supposed to scroll down besides the browser's scroll bar. This is also
+        not scalable at all, so adding content to the website would be a pain for someone that only has these files
+        to work with. Sure, AI might be great, but the larger of a website or project it has to work with, the more
+        unstable it gets since it starts getting into specifics. This is why I chose to focus on small components at
+        a time, and even then, things can get quite complex depending on what you want.</p>
+        
 </div>
