@@ -34,15 +34,15 @@ export class FadeOnScrollDirective implements AfterViewInit {
       opacity = 1;
     } else if (elementBottom < middleStart || elementTop > middleEnd) {
       // Element is completely outside the viewport
-      opacity = 0.3; // Set minimum opacity when off-screen
+      opacity = 0; // Set minimum opacity when off-screen
     } else {
       // Element is partially within the viewport
       if (elementTop < middleStart) {
         // Element is near the top
-        opacity = 0.3 + 0.5 * ((elementBottom - middleStart) / (windowHeight * 0.1));
+        opacity = 0.5 * ((elementBottom - middleStart) / (windowHeight * 0.1));
       } else if (elementBottom > middleEnd) {
         // Element is near the bottom
-        opacity = 0.3 + 0.5 * ((middleEnd - elementTop) / (windowHeight * 0.1));
+        opacity = 0.5 * ((middleEnd - elementTop) / (windowHeight * 0.1));
       }
     }
 

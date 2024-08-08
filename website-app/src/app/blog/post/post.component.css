@@ -11,6 +11,11 @@
 
 .post-bubble img {
   width: 50%;
+  border-radius: 20px;
+}
+
+a:link, a:visited, a:hover, a:active {
+  color: var(--contrast-1);
 }
 
 @media (max-width: 600px) {

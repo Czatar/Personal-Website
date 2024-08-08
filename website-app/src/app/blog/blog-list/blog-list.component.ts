@@ -26,7 +26,7 @@ export class BlogListComponent implements OnInit {
       posts: [
         { 
           id: 'post1', 
-          title: 'Making This Website' 
+          title: 'Making This Website - 8/8/2024' 
         }
       ] 
     }
