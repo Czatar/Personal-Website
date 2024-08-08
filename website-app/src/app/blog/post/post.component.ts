@@ -58,7 +58,7 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   loadContent(id: string): void {
-    this.http.get(`assets/blog-content/${id}.html`, { responseType: 'text' })
+    this.http.get(`assets/blog-content/${id}/${id}.html`, { responseType: 'text' })
       .subscribe(
         data => {
           if (this.content !== data) {

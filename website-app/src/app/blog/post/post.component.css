@@ -8,3 +8,13 @@
   box-sizing: border-box;
   text-align: center;
 }
+
+.post-bubble img {
+  width: 50%;
+}
+
+@media (max-width: 600px) {
+  .post-bubble img {
+    width: 100%;
+  }
+}
