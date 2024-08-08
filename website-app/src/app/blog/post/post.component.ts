@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { PostService } from '../../post.service';
 
 interface Post {
   id: string;
@@ -14,24 +16,32 @@ interface Post {
 })
 export class PostComponent implements OnInit {
   post!: Post;
+  content: string = 'Blog content not yet available. Check back later!';
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private postService: PostService) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const postId = params.get('id');
       if (postId) {
-        this.post = this.getPostById(postId);
+        const post = this.postService.getPostById(postId);
+        if (post) {
+          this.post = post;
+          this.loadContent(postId);
+        } else {
+          console.error('Post not found');
+        }
       } else {
-        // Handle the case where postId is null
         console.error('Post ID not found');
       }
     });
   }
 
-  getPostById(id: string): Post {
-    // Fetch post by ID
-    // Example data
-    return { id, title: `Post ${id}`, content: `This is the content of post ${id}.` };
+  loadContent(id: string): void {
+    this.http.get(`assets/blog-content/${id}.html`, { responseType: 'text' })
+      .subscribe(
+        data => this.content = data,
+        error => console.error('Error loading content:', error)
+      );
   }
 }

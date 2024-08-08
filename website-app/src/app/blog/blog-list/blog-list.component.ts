@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PostService } from '../../post.service';
 
 interface Post {
   id: string;
@@ -19,12 +20,19 @@ interface Category {
 })
 export class BlogListComponent implements OnInit {
   categories: Category[] = [
-    { name: 'Category 1', expanded: false, posts: [{ id: 'post1', title: 'Post 1' }, { id: 'post2', title: 'Post 2' }] },
-    { name: 'Category 2', expanded: false, posts: [{ id: 'post3', title: 'Post 3' }, { id: 'post4', title: 'Post 4' }] },
-    { name: 'Category 3', expanded: false, posts: [{ id: 'post5', title: 'Post 5' }, { id: 'post6', title: 'Post 6' }] }
+    { 
+      name: 'Programming', 
+      expanded: false, 
+      posts: [
+        { 
+          id: 'post1', 
+          title: 'Making This Website' 
+        }
+      ] 
+    }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private postService: PostService) {}
 
   ngOnInit(): void {}
 

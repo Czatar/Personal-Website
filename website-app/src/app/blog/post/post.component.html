@@ -1,5 +1,5 @@
-<div>
+<div class="contrast-1 bubble">
     <h1>{{ post.title }}</h1>
 </div>
 
-<p>{{ post.content }}</p>
+<div [innerHTML]="content" class="contrast-1 post-content"></div>
