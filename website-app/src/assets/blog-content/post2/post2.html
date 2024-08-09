@@ -1,0 +1,208 @@
+<div>
+    <h3>Motivation</h3>
+    <p>In my last semester at Texas A&M, I took a reverse engineering class. The final project consisted
+        of choosing our own malware sample to analyze and write a report about it. We had our own VirtualBox
+        VMs, and malware from the XP era was unlikely to jump any hypervisors, so it was a generally safe
+        and fitting final project for this class. I think I did a pretty good job for my project, so I've shared it here!</p>
+</div>
+<div>
+    <h3>Chosen Malware Sample</h3>
+    <p> I chose my sample by visiting <a href="http://dasmalwerk.eu/">Dasmalwerk</a> and choosing a random sample from the list. 
+        The sample's SHA-256 hash is a50f1be63ef1f51feac8f36a1b03664c4b6e8914633f6d71c5c7007984caf93c 
+        and its corresponding VirusTotal page is found
+        <a href="https://www.virustotal.com/gui/file/a50f1be63ef1f51feac8f36a1b03664c4b6e8914633f6d71c5c7007984caf93c">here</a>. 
+        After concluding my analysis, I've nicknamed this sample "XP NSIS Ransomware".</p>
+</div>
+<div>
+    <h3>1. Unpacking</h3>
+    <img src="/assets/blog-content/post2/figure1a.png" alt="figure 1a">
+    <p>Upon opening the sample, I had reason to believe that it wasn't packed. I was able to open the sample in Ghidra and 
+        find a typical looking entry function. After some analysis described in 2. Strings of Interest and 3. Imported Methods,
+        I found the icons in Figure 1a and confidently determined that this must be an NSIS installer.</p>
+    <img src="/assets/blog-content/post2/figure1b.png" alt="figure 1b">
+    <p>Sure enough, renaming the unzipped file to "setup.exe" or anything with a .exe extension causes the icon to change from a
+        blank file to the icon shown in Figure 1a. As shown in Figure 1b, this now looks like a typical NSIS installer. Sections
+        6. Modified Registry Entries and 7. Modified Files describes my realization that this was ransomware disguised as an NSIS installer.</p>
+    <img src="/assets/blog-content/post2/figure1c.png" alt="figure 1c">
+</div>
+<div>
+    <h3>2. Strings of Interest</h3>
+    <p>I used Ghidra to analyze the strings in this sample.</p>
+    <img src="/assets/blog-content/post2/figure2a.png" alt="figure 2a">
+    <p>In Figure 2a there are several suspicious strings present in the binary. The "fffox" and "wxxxpx" strings were
+        mysterious at first, but upon expanding the "Code Unit” section, it was revealed that Ghidra was tricked into
+        thinking these were strings since they were part of image data for icons in the .rsrc section that happened to
+        end in 0x00 bytes. The strings "Please wait while Setup is loading…” and "NSIS Error” are indicators that this
+        is an NSIS installer.</p>
+    <p>There are other strings present in the data section that might indicate that DLL functions are loaded at runtime,
+        which is evident from my analysis in 4. Disassembly.</p>
+</div>
+<div>
+    <h3>3. Imported Methods</h3>
+    <p>I used Ghidra to inspect the imported methods in this sample.</p>
+    <img src="/assets/blog-content/post2/figure3a.png" alt="figure 3a">
+    <p>From the imports described in Figure 3a, I suspected that this sample was an interactive application that shows
+        dialog options and creates some sort of files on the machine. Not shown are imported functions from Advapi32.dll
+        that also indicate that the sample makes changes in the registry. In my past experiences with creating NSIS
+        installers, I know that it's possible to create NSIS scripts that install files and make registry edits, so these
+        imports are entirely consistent for your run-of-the-mill NSIS setup.exe installer.</p>
+</div>
+<div>
+    <h3>4. Disassembly</h3>
+    <p>I used Ghidra to disassemble this sample. I started the analysis from the entry point.</p>
+    <img src="/assets/blog-content/post2/figure4a1.png" alt="figure 4a1">
+    <img src="/assets/blog-content/post2/figure4a2.png" alt="figure 4a2">
+    <p>The first section of entry gathers information about the system. Interestingly, it has some sort of string pointer
+        table. In "getFunctionAddr” it gets the handle to the DLL, then the corresponding function below the DLL name in
+        Figure 4a. For the DAT lines marked in red, function ordinals are provided instead of function names due to header
+        file differences in Windows XP, as I learned from
+        <a href="https://www.geoffchappell.com/studies/windows/shell/shlwapi/api/isos/isos.htm">this documentation</a>.
+        Lastly, it retrieves the command line argument with the purpose of obtaining the full path of the executable
+        surrounded by quotes, given how it's checking for the first quote in line 70.</p>
+    <img src="/assets/blog-content/post2/figure4b.png" alt="figure 4b">
+    <p>I've carefully reconstructed the function that returns the address of a function that should be loaded along with
+        the global variables in Figure 4a used by the function shown in Figure 4b. From the caller to this function,
+        random-looking integers were passed in, and the return value was being called like a function, which makes the
+        decompilation of this function helpful for static analysis.</p>
+    <img src="/assets/blog-content/post2/figure4c.png" alt="figure 4c">
+    <p>Figure 4c shows the while loop that seems to perform complex string operations. After debugging this section,
+        I concluded that it wasn't a significant part of the sample. After the loop, It retrieves the path to the TEMP
+        folder on the system before calling GetTempFileName, which I've renamed due to my findings in 8. Debugging
+        the Malware Sample. At this point, it was clear that dynamic analysis techniques are better suited for this sample.</p>
+</div>
+<div>
+    <h3>5. Network Traffic</h3>
+    <p>I used INETSIM on REMnux to analyze network traffic while the malware executes. The simulation ran from when I
+        began execution until about a minute after the ransomware message shown in Figure 1c manifested.</p>
+    <img src="/assets/blog-content/post2/figure5a.png" alt="figure 5a">
+    <p>Figure 5a displays several reverse DNS lookups, evident from the .in-addr.arpa suffix. Looking them up manually in
+        an online reverse DNS lookup website doesn't result in anything useful. Given that this is ransomware and it asks
+        the user to email someone for decryption, I do not see a motive for remote communication and have decided to
+        continue analysis elsewhere.</p>
+    <img src="/assets/blog-content/post2/figure5b.png" alt="figure 5b">
+    <p>It's still worth mentioning that one of my OllyDbg runs resulted in this TCP activity at the end of execution.
+        Interestingly, none of the addresses in Figure 5b match the IP addresses in INetSim.</p>
+</div>
+<div>
+    <h3>6. Modified Registry Entries</h3>
+    <p>I used ProcMon to identify modified registry entries while running setup.exe. To do this, I set the filter to
+        exclude all operations whose process name was not "setup.exe” and isolated registry functions until only
+        "RegCreateKey” and "RegSetValue” were displayed.</p>
+    <img src="/assets/blog-content/post2/figure6a1.png" alt="figure 6a1">
+    <img src="/assets/blog-content/post2/figure6a2.png" alt="figure 6a2">
+    <p>Immediately, I found it very suspicious that keys relating to RNG seeds were being modified. In hindsight,
+        this is most likely the malware trying to make its encryption seem as random as possible. I also immediately
+        noticed "----- BEGIN PUBLIC KEY -----” followed by what I assume is a key created in
+        "HKLM\SOFTWARE\System32\Configuration\xpk” along with other information that may indicate what scheme is used
+        that uses the public key.</p>
+    <p>I noticed that "C:\Documents and Settings\” appeared in some of the written registry values, which confirms that
+        this sample is meant to target Windows XP and explains why nothing happened when I tried running it in the
+        Windows 7 VM.</p>
+    <p>The registry key containing "Microsoft\Windows\CurrentVersion\Run” indicates that this malware uses persistence
+        methods involving csrss.exe. Searching the internet for this executable results in sources claiming that this
+        file is not malware and it's a critical process that, if stopped, will crash windows.</p>
+    <img src="/assets/blog-content/post2/figure6b.png" alt="figure 6b">
+    <p>After following the path (including hidden folders) to find where csrss.exe was located, I only found one file
+        that had the same NSIS icon. Since it's the only file present in this folder and the icon was the same as the
+        original setup.exe file, I suspect that this file is posing as the real csrss.exe but is actually a file that
+        helps with persistence. In ProcMon, I had to dig further to find out that this file is getting created by
+        Explorer.exe, which means that the malware is most likely telling other executables to write copies of
+        setup.exe to mitigate detection.</p>
+    <p>At the very end of the modified registry edits, I saw that the modified registry entry that determines the
+        wallpaper image was set to a strange bmp file, and that's when I minimized ProcMon to find the ransomware
+        message shown in Figure 1c.</p>
+</div>
+<div>
+    <h3>7. Modified Files</h3>
+    <p>I used ProcMon to identify modified files. As this is ransomware, I had to figure out how to whittle down the
+        45,000 events that involved file encryption and isolate the more interesting file operations.</p>
+    <img src="/assets/blog-content/post2/figure7a.png" alt="figure 7a">
+    <p>The process to encrypt each file follows the sequence shown in Figure 7a. The file operations of interest happen
+        before and after these operations, so I can generally ignore the middle chunk of the page.</p>
+    <img src="/assets/blog-content/post2/figure7b.png" alt="figure 7b">
+    <p>There are 10 README files written to the desktop, all of which contain the same content in Russian and English.
+        It asks the user to send a specific code to "Novikov.Vavila@gmail.com”.</p>
+    <img src="/assets/blog-content/post2/figure7c.png" alt="figure 7c">
+    <p>The rest of the README file instructs the user to install the Tor browser and navigate to a link if the user does
+        not receive a reply from the email within 48 hours. Figure 7c shows the content to be sent to the email, which
+        shows strong resemblance to the registry entries found after the analysis in 6. Modified Registry Entries and
+        could be a clue for how to decrypt the files.</p>
+    <p>The other set of significant file writes displayed in Figure 7b shows that setup.exe is read before the encryption
+        process. The highlighted line is particularly interesting to me since it's accessing 16,384 bytes at a seemingly
+        arbitrary offset, which may prove useful to binary analysis in Ghidra. Many other temporary files are read from
+        and written to, particularly nslC.tmp and "213415908”. The former doesn't appear in the Temp folder, but the
+        latter does. The pattern of file accesses in ProcMon goes as follows:
+        <ul>
+            <li>Many file reads of size 512 bytes from setup.exe from offset 0</li>
+            <li>Seemingly random writes to nslC.tmp at offsets between 0 and 65,536</li>
+            <li>Interleaved reads from setup.exe (16,384 bytes, offsets 68,124 to 903,708) and writes to nslC.tmp
+                (around 16,155 bytes, offsets 76,817 to 903,629)</li>
+            <li>Interleaved reads from nslC.tmp (offsets 76,836 to end) and writes to 213415908 (entire file),
+                all of length 16,384 bytes</li>
+        </ul></p>
+    <p>From this, I can assume that setup.exe is copying itself into various locations on the file system.</p>
+</div>
+<div>
+    <h3>8. Debugging the Malware Sample</h3>
+    <p>I used OllyDbg to step through the sample after looking through the code in Ghidra to pinpoint mysterious codes
+        and other functions of interest.</p>
+    <img src="/assets/blog-content/post2/figure8a.png" alt="figure 8a">
+    <p>After skipping static analysis for the mysterious while loop in Figure 4c and the inner workings of function
+        FUN_004032dc, I decided to place a breakpoint after the function and look at the registers. Figure 8a shows
+        that it did some computations on the TempPath global variable (containing the full path to the system's temp
+        folder) and output the TEMP/nsl5.tmp file. Since a file was output, the if branch in Figure 4c was skipped,
+        hence my lack of analysis for that branch. During analysis, I had to start over, and found that the temp file
+        name "nsl5.tmp” was "nsd1.tmp” for that run. During the initial analysis in 7. Modified Files, the temp file
+        was "nslC.tmp”, indicating that the file name is similar but random for each run, most likely to mitigate
+        prevention techniques.</p>
+    <img src="/assets/blog-content/post2/figure8b.png" alt="figure 8b">
+    <p>I continued cross-referencing OllyDbg addresses with those present in Ghidra to make notes until reaching
+        FUN_00403620. As described in Figure 8b, this function is worth stepping into.</p>
+    <img src="/assets/blog-content/post2/figure8c.png" alt="figure 8c">
+    <p>Thanks to OllyDbg, I am able to note which branches are not taken on my particular VM. Figure 8c shows an example
+        of commented Ghidra decompilation code that indicates which branch is not taken. After the branch, I reached line
+        FUN_0040140b at line 76. Stepping over this function causes the malware to continue until it terminates,
+        so another step into is required.</p>
+    <img src="/assets/blog-content/post2/figure8d.png" alt="figure 8d">
+    <p>The function immediately calls another function and leads into the mysterious while loop shown in Figure 8d.
+        The two lines of interest are the function calls to FUN_00401434 and FUN_0040136d. The former function proved
+        to be more interesting.</p>
+    <img src="/assets/blog-content/post2/figure8e.png" alt="figure 8e">
+    <p>As this is in a loop, I was curious to see what each function call does and how many times the loop executed
+        before the loop ends. So I put breakpoints as shown in Figure 8e and keep an eye on ProcMon to see how it lines
+        up with the analysis done in 6. Modified Registry Entries and 7. Modified Files.</p>
+    <img src="/assets/blog-content/post2/figure8f1.png" alt="figure 8f1">
+    <img src="/assets/blog-content/post2/figure8f2.png" alt="figure 8f2">
+    <p>As it turns out, FUN_0040136d isn't of much use, but FUN_00401343 absolutely has interesting things happening in it.
+        The first screenshot in Figure 8f shows the first time running the latter function which appears to query the
+        existence of the Temp folder. The second time, however, is the more interesting execution. The entire function
+        seems to copy setup.exe into "nsl2.tmp” and followed by copying "nsl2.tmp” into "213415908”. The filename that is
+        just an integer has the same name as when I ran the malware earlier.</p>
+    <p>A few more events happen while flicking between the function calls in Figure 8e like a light switch. System.dll
+        (a file I couldn't find information about) is placed into a folder within temp called "nsk3.tmp” and then
+        QueryOpen, QueryOpen, CreateFile operations are called on that file over and over again. Each time, EAX gets
+        pushed onto the stack before FUN_00401343 but the value of EAX increments by 0x1c each time. Eventually, the
+        malware executed until completion without hitting the second breakpoint. Curious as to what happens inside the
+        function, I opened it in Ghidra, which revealed a huge switch statement. I opted to restart the process and set a
+        breakpoint at one of the returns. To my surprise, it returned to FUN_0040136d, which means that it calls the caller
+        in some of the switch cases and greatly complicates this analysis.</p>
+    <p>Instead of trying to place breakpoints and guessing where a significant event happens, I used "Execute until return” 
+        in OllyDbg while keeping an eye on ProcMon to find where the encryption happens. However, the execution continued
+        until termination.</p>
+    <img src="/assets/blog-content/post2/figure8g.png" alt="figure 8g">
+    <p>Upon further analysis, I might have found the culprit to why I cannot pinpoint where encryption happens. Somewhere
+        in setup.exe, a function in System.dll gets called that in turn executes setup.exe, evident in Figure 8g. Upon
+        opening System.dll in Ollydbg, another very large switch statement is seen. I assume that System.dll is used to
+        hide activity from those analyzing the code.</p>
+</div>
+<div>
+    <h3>9. Cleaning Up</h3>
+    <p>Unfortunately, very heavy analysis is required to pick apart the encryption process, which is very well hidden
+        as evident in 8. Debugging the Malware Sample. The encrypted files will have to stay encrypted, at least from
+        my analysis.</p>
+    <p>The best that can be done is to find and remove as many copies of the malware as possible. These locations are
+        wherever it got run, removing csrss.exe from the path shown in Figure 6b, and deleting 213415908 from
+        C:\Documents and Settings\Archive\Local Settings\Temp\.</p>
+    <p>Since the registry edits relate strongly to cryptographic keys, I would recommend not to attempt to revert the
+        registry, as analysis elsewhere might be able to decrypt your files if given the public key present in Figure 6a.</p>
+</div>

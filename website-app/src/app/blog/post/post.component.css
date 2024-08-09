@@ -3,7 +3,7 @@
   opacity: 0.99999 !important;
 }
 
-.post-bubble {
+.blog-content div {
   transition: background-color 0.3s;
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
@@ -14,17 +14,22 @@
   text-align: center;
 }
 
-.post-bubble img {
+.blog-content div img {
   width: 50%;
   border-radius: 20px;
 }
 
-.post-bubble p {
+.blog-content div p {
   text-align: left !important;
 }
 
 a:link, a:visited, a:hover, a:active {
   color: var(--contrast-1);
+}
+
+.blog-content ul li{
+    list-style-type: decimal;
+    text-align: left;
 }
 
 @media (max-width: 600px) {

@@ -12,7 +12,8 @@ interface Post {
 })
 export class PostService {
   private posts: Post[] = [
-    { id: 'post1', title: 'Making This Website - 8/8/2024', content: 'This is the content of post1.', category: "Programming"}
+    { id: 'post1', title: 'Making This Website - 8/8/2024', content: '', category: "Programming"},
+    { id: 'post2', title: 'XP Ransomware Analysis - 8/9/2024', content: '', category: "Programming"}
   ];
 
   getPostById(id: string): Post | undefined {
