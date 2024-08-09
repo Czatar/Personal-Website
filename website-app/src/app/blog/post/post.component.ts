@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy  } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { PostService } from '../../post.service';
@@ -13,7 +13,8 @@ interface Post {
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css']
+  styleUrls: ['./post.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PostComponent implements OnInit, OnDestroy {
   post!: Post;
@@ -53,11 +54,11 @@ export class PostComponent implements OnInit, OnDestroy {
     this.loadContent(id);
     this.pollingInterval = setInterval(() => {
       this.loadContent(id);
-    }, 2000); // Poll every 5 seconds
+    }, 2000);
   }
 
   loadContent(id: string): void {
-    this.http.get(`assets/blog-content/${id}/${id}.html`, { responseType: 'text' })
+    this.http.get(`/assets/blog-content/${id}/${id}.html`, { responseType: 'text' })
       .subscribe(
         data => {
           if (this.content !== data) {
