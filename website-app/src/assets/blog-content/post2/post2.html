@@ -131,15 +131,15 @@
         process. The highlighted line is particularly interesting to me since it's accessing 16,384 bytes at a seemingly
         arbitrary offset, which may prove useful to binary analysis in Ghidra. Many other temporary files are read from
         and written to, particularly nslC.tmp and "213415908”. The former doesn't appear in the Temp folder, but the
-        latter does. The pattern of file accesses in ProcMon goes as follows:
-        <ul>
-            <li>Many file reads of size 512 bytes from setup.exe from offset 0</li>
-            <li>Seemingly random writes to nslC.tmp at offsets between 0 and 65,536</li>
-            <li>Interleaved reads from setup.exe (16,384 bytes, offsets 68,124 to 903,708) and writes to nslC.tmp
-                (around 16,155 bytes, offsets 76,817 to 903,629)</li>
-            <li>Interleaved reads from nslC.tmp (offsets 76,836 to end) and writes to 213415908 (entire file),
-                all of length 16,384 bytes</li>
-        </ul></p>
+        latter does. The pattern of file accesses in ProcMon goes as follows:</p>
+    <ul>
+        <li>Many file reads of size 512 bytes from setup.exe from offset 0</li>
+        <li>Seemingly random writes to nslC.tmp at offsets between 0 and 65,536</li>
+        <li>Interleaved reads from setup.exe (16,384 bytes, offsets 68,124 to 903,708) and writes to nslC.tmp
+            (around 16,155 bytes, offsets 76,817 to 903,629)</li>
+        <li>Interleaved reads from nslC.tmp (offsets 76,836 to end) and writes to 213415908 (entire file),
+            all of length 16,384 bytes</li>
+    </ul>
     <p>From this, I can assume that setup.exe is copying itself into various locations on the file system.</p>
 </div>
 <div>

@@ -12,6 +12,7 @@
   margin: 20px 0;
   box-sizing: border-box;
   text-align: center;
+  overflow-x: hidden;
 }
 
 .blog-content div img {
@@ -25,6 +26,13 @@
 
 a:link, a:visited, a:hover, a:active {
   color: var(--contrast-1);
+}
+
+.blog-content ul {
+  margin-right: 20px; 
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .blog-content ul li{
