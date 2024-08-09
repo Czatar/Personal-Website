@@ -12,6 +12,11 @@
 .post-bubble img {
   width: 50%;
   border-radius: 20px;
+  opacity: 0.9 !important;
+}
+
+.post-bubble p {
+  text-align: left !important;
 }
 
 a:link, a:visited, a:hover, a:active {

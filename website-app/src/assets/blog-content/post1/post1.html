@@ -78,5 +78,46 @@
         Overall, it isn't too bad. The
         <a href="https://github.com/Czatar/Personal-Website/blob/main/website-app/src/app/settings/settings.component.ts">
         settings.component.ts</a> file is only about 100 lines long. This controls the site theme, font size, and
-        background opacity. Surprisingly, the css styling for it required more effort. </p>
+        background opacity. And just when I thought I was getting the hang of CSS, it turns out that calc() operations do
+        not support arithmetic with hex colors. Oh well. </p>
+    <p>When giving the settings buttons images, I was also struggling with making it look good on my phone, as the
+        images would get cut off from the sides. Jippity was trying to be smart and trying to make me use webkit tools, 
+        but I got lazy and simply made the menu icon larger and that did the trick!</p>
+    <img src="/assets/blog-content/post1/glow.png">
+    <p>For the rainbow effect seen on the header/footer, this is what Jippity suggested at first. This was absolutely
+        not going to fly and it felt very scuffed. After a bit of back-and-forth discussion with Jippity, I was able
+        to convince it to give me Typescript code to manually set the intervals, which is much easier to adjust!
+        At this point, I was convinced that Jippity alone cannot threaten any jobs. Even though the Settings were in
+        their own component, it required interactions between it and other components as well as the global style.css file,
+        so it makes sense that our friend Jippity was starting to struggle. FOr every "solution" it gave me, there were at
+        least a few errors that I had to poke it again for. There was also the issue where Jippity would assume that
+        I wouldn't have a particular file, and I would have to provide the current state of that file so that Jippity
+        could fill in what's missing to make something work. It was tedious at this point, but still manageable.</p>
+    <img src="/assets/blog-content/post1/about.png">
+    <p>The most vital advantage I had was the ability to show it pictures of my website so I can properly convey
+        what I'm looking at and how I want it fixed. Jippity did a much better job when it had something concrete to
+        work with.</p>
+</div>
+<div class="post-bubble">
+    <h3>Setting Up Blogs and Addressing Refresh Errors</h3>
+    <p>This was the most intimidating part to set up and also the part where Jippity was the most helpful.
+        Since I didn't want to make a component for every single blog post that I'm going to make, Jippity suggested
+        that I use lazy loading and a sub-router for blogs and a service to get every post, which was the most
+        impressive suggestion Jippity has made to make adding to blogs scalable!</p>
+    <img src="/assets/blog-content/post1/routing.png">
+    <p>Here's me struggling with Jippity to get routing to work correctly. There were so many new files that I had
+        to take a moment to read through them to understand how it all works. Thankfully, Jippity nailed the HTML
+        injection and a simple way to get the CSS to work for any given HTML blog post. However, this was when I
+        discovered a glaring issue: refreshing on any page returns a blank page (and a 404 error on Azure).</p>
+    <img src="/assets/blog-content/post1/routing.png">
+    <p>Jippity was really starting to get on my nerves after hours of looking at this problem. Since Jippity
+        rightfully turns to the Angular documentation that addresses this issue, the sole reason I turn to
+        Jippity is because documentation itself isn't written in a helpful manner to beginners. Every time I
+        would provide Jippity with screenshots of the Network tab or other debugging information, it would 
+        suggest that I make sure I have base href set to "/", which I did, so it almost felt like it was taunting me.
+        By some miracle,
+        <a href="https://stackoverflow.com/questions/73535177/how-do-i-locate-my-staticwebapp-config-json-in-azure-devops-release-deploy-azure">
+        I found a helpful answer on Stack Overflow</a> and all reloading issues were resolved. At this point, I could
+        finally declare my website finished, and I will (hopefully) never have to wrestle with Jippity over developing
+        websites again!</p>
 </div>
