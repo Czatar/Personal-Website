@@ -1,6 +1,7 @@
 {
   "navigationFallback": {
-    "rewrite": "/index.html"
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "/static/*"]  // Exclude assets from being rewritten
   },
   "responseOverrides": {
     "404": {
@@ -10,10 +11,17 @@
   },
   "routes": [
     {
+      "route": "/assets/*",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"  // Proper caching for static assets
+      }
+    },
+    {
       "route": "/*",
       "headers": {
-        "cache-control": "no-store"
+        "cache-control": "no-store"  // No caching for the rest of the app (e.g., HTML)
       }
     }
   ]
 }
+
