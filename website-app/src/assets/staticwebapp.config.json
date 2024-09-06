@@ -1,7 +1,7 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/assets/*", "/static/*"]
+    "exclude": ["/assets/*", "/static/*", "/*.js", "/*.css"]
   },
   "responseOverrides": {
     "404": {
@@ -17,11 +17,16 @@
       }
     },
     {
-      "route": "/*",
+      "route": "/*.js",
+      "headers": {
+        "cache-control": "no-store"
+      }
+    },
+    {
+      "route": "/*.css",
       "headers": {
         "cache-control": "no-store"
       }
     }
   ]
 }
-
