@@ -6,6 +6,7 @@
       "/assets/*",
       "/scripts/*",
       "/styles/*",
+      "/images/*",
       "*.js",
       "*.css",
       "*.png",
@@ -15,15 +16,14 @@
       "*.svg",
       "*.woff",
       "*.woff2",
-      "*.ttf"
+      "*.ttf",
+      "*.eot"
     ]
   },
-  "routes": [
-    {
-      "route": "/*",
-      "headers": {
-        "cache-control": "no-store"
-      }
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/index.html",
+      "statusCode": 200
     }
-  ]
+  }
 }
