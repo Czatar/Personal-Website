@@ -4,21 +4,31 @@
     "exclude": [
       "/favicon.ico",
       "/assets/*",
-      "/scripts/*",
-      "/styles/*",
-      "/images/*",
-      "*.js",
-      "*.css",
-      "*.png",
-      "*.jpg",
-      "*.jpeg",
-      "*.gif",
-      "*.svg",
-      "*.woff",
-      "*.woff2",
-      "*.ttf",
-      "*.eot"
+      "/*.css",
+      "/*.js",
+      "/*.woff2",
+      "/*.woff",
+      "/*.ttf",
+      "/*.eot",
+      "/*.svg",
+      "/*.png",
+      "/*.jpg",
+      "/*.jpeg",
+      "/*.gif"
     ]
+  },
+  "mimeTypes": {
+    ".js": "application/javascript",
+    ".css": "text/css",
+    ".woff": "font/woff",
+    ".woff2": "font/woff2",
+    ".ttf": "font/ttf",
+    ".eot": "application/vnd.ms-fontobject",
+    ".svg": "image/svg+xml",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".gif": "image/gif"
   },
   "responseOverrides": {
     "404": {
