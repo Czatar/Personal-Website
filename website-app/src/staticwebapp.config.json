@@ -1,16 +1,10 @@
 {
-  "responseOverrides": {
-    "404": {
-      "rewrite": "/index.html",
-      "statusCode": 200
-    }
-  },
   "navigationFallback": {
     "rewrite": "index.html",
     "exclude": ["/*.{ico,js,map,css}"]
   },
   "mimeTypes": {
-        ".js": "text/javascript",
-        ".css": "text/css"
-      }
+    ".js": "text/javascript",
+    ".css": "text/css"
+  }
 }
