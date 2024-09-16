@@ -8,5 +8,9 @@
   "navigationFallback": {
     "rewrite": "index.html",
     "exclude": ["/*.{ico,js,map,css}"]
-  }
+  },
+  "mimeTypes": {
+        ".js": "text/javascript",
+        ".css": "text/css"
+      }
 }
