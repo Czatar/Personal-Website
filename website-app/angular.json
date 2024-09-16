@@ -15,7 +15,6 @@
           "options": {
             "outputPath": "dist/website-app",
             "baseHref": "/",
-            "deployUrl": "/",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -24,8 +23,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/staticwebapp.config.json"
+              "src/assets"
             ],
             "styles": [
               "src/styles.css"
@@ -52,7 +50,7 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "none"
+              "outputHashing": "all"
             },
             "development": {
               "optimization": false,
