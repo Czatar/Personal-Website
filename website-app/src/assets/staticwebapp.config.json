@@ -1,13 +1,9 @@
 {
   "navigationFallback": {
-    "rewrite": "/index.html"
-  },
-  "routes": [
-    {
-      "route": "/*",
-      "headers": {
-        "cache-control": "no-store"
-      }
-    }
-  ]
+    "rewrite": "index.html",
+    "exclude": [
+      "/images/*.{png,jpg,gif,ico}",
+      "/*.{css,scss,js}"
+    ]
+  }
 }
