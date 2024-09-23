@@ -41,7 +41,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 @media (max-width: 600px) {
-  .post-bubble img {
+  .blog-content div img {
     width: 100%;
   }
 }
