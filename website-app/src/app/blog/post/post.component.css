@@ -3,6 +3,14 @@
   opacity: 0.99999 !important;
 }
 
+.blog-content
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .blog-content div {
   transition: background-color 0.3s;
   background-color: rgba(255, 255, 255, 0.1);
@@ -13,10 +21,11 @@
   box-sizing: border-box;
   text-align: center;
   overflow-x: hidden;
+  width: 75%;
 }
 
 .blog-content div img {
-  width: 50%;
+  width: 75%;
   border-radius: 20px;
 }
 
@@ -41,6 +50,9 @@ a:link, a:visited, a:hover, a:active {
 }
 
 @media (max-width: 600px) {
+  .blog-content div {
+    width: 100%;
+  }
   .blog-content div img {
     width: 100%;
   }
